@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="login-page">
+        <div class="row">
+            <div class="col-lg-6">
+                <h1>Log in</h1>
+
+                {% if next %}
+
+                    <form action="{{ next }}" method="post">
+                {% else %}
+
+                    <form action="/accounts/login/" method="post">
+                {% endif %}
+
+                {% csrf_token %}
+                <p>{{ form.username }}</p>
+                <p> {{ form.password }}</p>
+                <input type="submit" value="Log in">
+                </form>
+{#                <a href="/reset_pass">Forgotten password</a>#}
+                {% if error %}
+                    {{ error }}
+                {% endif %}
+            </div>
+            <div class="col-lg-6">
+               <a href="/add_user"> <h1>Sign up</h1></a>
+            </div>
+        </div>
+{% endblock %}

@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Sales Report</title>
+    <style type="text/css">
+    </style>
+</head>
+<body>
+{% load humanize %}
+<div class="contact-info">
+    <div class="col-lg-12">
+        {% if contact %}
+            <div class="form-row avatar">
+                <div class="form-group col-md-12 mb-0">
+                    {% if contact.avatar %}
+                        <img src="{{ contact.avatar.url }}" width="250px" class="avatar-main">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12 mb-0">
+                    <h1>{{ contact.first_name }} {{ contact.last_name }}</h1>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12 mb-0">
+                    <h5>{{ contact.age }} years old, {{ contact.sex|lower }}. Born: {{ contact.birthdate }}</h5>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12 mb-0">
+                    <p>{{ contact.description }}</p>
+                    <p>Added by {{ contact.created_by|capfirst }}</p>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12 mb-0">
+                    <a href="/contact/edit/{{ contact.id }}" class="btn btn-defaultbtn btn-default">Edit</a>
+                    <a href="/contact/delete/{{ contact.id }}" class="btn btn-default">Delete</a>
+
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+    <div class="relationships">
+        <div class="col-md-12">
+            <p>Relacje |
+                {% if contact %}
+                    <a href="/contact/{{ contact.id }}/relationship/add">Add</a>
+                {% else %}
+                    <a href="/contact/{{ id }}/relationship/add">Add</a>
+                {% endif %}
+            </p>
+        </div>
+        {% if relationship_form %}
+            <div class="col-md-12">
+                <form action="/contact/{{ contact.id }}/relationship/add" method="post">
+                    {% csrf_token %}
+
+                    <blockquote class="blockquote">
+                        <p class="mb-0">
+                            {{ relationship_form.contact }}
+                        </p>
+                        <footer class="blockquote-footer">
+                            <cite>{{ relationship_form.types }} |
+                                <button type="submit" title="save contact">Save</button>
+                            </cite>
+                        </footer>
+                    </blockquote>
+
+                </form>
+            </div>
+        {% endif %}
+        {% if from_relationships %}
+            {% for relationship in from_relationships %}
+                <div class="col-md-12">
+                    <blockquote class="blockquote">
+                        <p class="mb-0">
+                            <a href="/contact/view/{{ relationship.to_contact.id }}">{{ relationship.to_contact }}</a>
+                        </p>
+                        <footer class="blockquote-footer">
+                            <cite>{{ relationship.types.to_type }} | <a
+                                    href="/contact/{{ contact.id }}/relationship/delete/{{ "from" }}/{{ relationship.to_contact.id }}/{{ relationship.types.id }}">Delete</a></cite>
+                        </footer>
+                    </blockquote>
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% if to_relationships %}
+            {% for relationship in to_relationships %}
+                <div class="col-md-12">
+                    <blockquote class="blockquote">
+                        <p class="mb-0">
+                            <a href="/contact/view/{{ relationship.from_contact.id }}">{{ relationship.from_contact }}</a>
+                        </p>
+                        <footer class="blockquote-footer">
+                            <cite>{{ relationship.types.from_type }} | <a
+                                    href="/contact/{{ contact.id }}/relationship/delete/{{ "to" }}/{{ relationship.from_contact.id }}/{{ relationship.types.id }}">Delete</a></cite>
+                        </footer>
+                    </blockquote>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% if activites %}
+    {% for activity in activites %}
+        <div class="activity-box">
+            <div class="activitiy-title">
+                {{ activity.title }} | <a href="/contact/{{ contact.id }}/activity/{{ activity.id }}/edit/">Edit</a>
+                | <a href="/contact/{{ contact.id }}/activity/{{ activity.id }}/delete/">Delete</a>
+            </div>
+            <div class="activitiy-description">
+                {{ activity.description }}
+            </div>
+            <div class="activitiy-created">
+                Updated: {{ activity.updated_at|naturaltime }} | Created: {{ activity.created_at|naturaltime }}
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+</div>
+</body>
+</html>

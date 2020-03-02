@@ -1,0 +1,225 @@
+
+html {
+    line-height: 1.6;
+}
+
+body, p, a {
+    font-family: "Times New Roman", Times, serif;
+    color: #666666;
+    line-height: 1.6;
+}
+
+a.mobile {
+    display: none
+}
+
+@media (max-width: 640px) {
+    a.mobile {
+        display: block
+    }
+
+    a.desktop {
+        display: none
+    }
+}
+
+input {
+    border: none;
+    border-bottom: 1px solid #666666;
+    /*width: 12%;*/
+}
+
+.avatar-main {
+    border-radius: 30px;
+}
+
+/*.relationships {*/
+/*    margin: 20px;*/
+/*    padding: 20px;*/
+/*}*/
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    line-height: 1.2;
+    color: #444444
+}
+
+.center-div {
+    /*display: flex;*/
+    /*justify-content: center;*/
+}
+
+.contact-info {
+    text-align: center;
+    margin: 2rem;
+    padding: 1rem;
+    /*width: 90%;*/
+    border: solid 1px black;
+}
+
+.contact-card {
+    border: solid 1px black;
+    margin: 1rem;
+    /*border-radius: 25px;*/
+    padding: 1rem;
+    display: inline-block;
+    width: 300px;
+    /*height: 200px;*/
+    height: 300px;
+    vertical-align: middle;
+}
+
+.activity-submit-box {
+    border: black solid 1px;
+    margin: 2rem;
+    padding: 2%;
+    display: block;
+    height: 200px;
+    /*width: 90%;*/
+}
+
+.activity-box {
+    border: black solid 1px;
+    /*width: 50rem;*/
+    margin: 2rem;
+    padding: 2%;
+    display: block;
+}
+
+.contact-activity {
+    margin: 2rem;
+    padding: 1rem;
+}
+
+.activity-box {
+    border: black solid 1px;
+    padding: 1rem;
+    /*width: 90%;*/
+    height: auto;
+    margin-top: 1%;
+}
+
+.relationships {
+    border: black solid 1px;
+    /*padding: 2%;*/
+    /*width: 90%;*/
+    margin: 2rem;
+    padding: 2%;
+    /*margin-left: 10%;*/
+
+}
+
+.activity-submit-box textarea {
+    border: none;
+    height: 60%;
+    width: 100%;
+}
+
+.activity-submit-box button {
+    border: none;
+    margin: 0;
+    padding: 0;
+    background: none;
+}
+
+.form-group input {
+    width: 20%;
+}
+
+#id_birthdate {
+    width: 6rem;
+}
+
+input[type=file] {
+    background: none;
+}
+
+button, input[type=submit] {
+    border: none;
+    margin: 0;
+    padding: 0;
+    background: none;
+}
+
+#id_description {
+    width: 100%;
+    height: 5rem;
+}
+
+.blockquote button, select {
+    border: none;
+    margin: 0;
+    padding: 0;
+    background: none;
+}
+
+.contacts-title {
+    text-align: center;
+}
+
+.login-page {
+    text-align: center;
+    vertical-align: middle;
+    margin-top: 5%;
+}
+
+.main-page {
+    /*margin: 10rem;*/
+    margin-top: 20%;
+    margin-bottom: 20%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.add-contact {
+    height: 15rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media only screen and (max-width: 400px) {
+    .contact-card {
+        width: 50%;
+        height: auto;
+
+    }
+
+    img {
+        width: 50%;
+    }
+
+    input {
+        width: 40px;
+    }
+}
+
+.cards {
+    align-content: center;
+    text-align: center;
+}
+
+.form-inline #id_name {
+    width: 80%;
+}
+
+.relationships-info {
+    height: 10em;
+    position: relative
+}
+
+.form-inline {
+    margin: 0;
+}
+
+.relationships-info-2 {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}

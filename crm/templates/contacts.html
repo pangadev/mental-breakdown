@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load extratag %}
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12 contacts-title">
+            <h1><a href="/contacts">All contacts</a></h1>
+            Order by: <a href="/contacts/sort/{{ "newest_activity" }}">Newest Activity</a>, <a
+                href="/contacts/sort/{{ "oldest_activity" }}">Oldest Activity</a>, <a
+                href="/contacts/sort/{{ "first_name" }}">First name</a>, <a
+                href="/contacts/sort/{{ "last_name" }}">Last name</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="cards">
+                {#                {% for contact in contacts %}#}
+                {% if contacts_list1 %}
+                    {% for contact in contacts1 %}
+                        <a href="/contact/view/{{ contact.id }}">
+                            <div class="contact-card">
+                                {% if contact.avatar %}
+                                    <p><img src="{{ contact.avatar.url }}" width="100px" class="avatar-main"></p>
+                                {% endif %}
+                                <p>{{ contact.first_name }} {{ contact.last_name }}</p>
+                                <p>Last contact</p>
+                                {% if contact.updated_at is not null %}
+                                    <p>{{ contact.updated_at|naturaltime }} </p>
+                                {% else %}
+                                    <p>never</p>
+                                {% endif %}
+                                <p></p>
+                            </div>
+                        </a>
+                    {% endfor %}
+                    {% for contact in contacts2 %}
+                        <a href="/contact/view/{{ contact.id }}">
+                            <div class="contact-card" style="opacity: 0.5;">
+                                {% if contact.avatar %}
+                                    <p><img src="{{ contact.avatar.url }}" width="100px" class="avatar-main"></p>
+                                {% endif %}
+                                <p>{{ contact.first_name }} {{ contact.last_name }}</p>
+                                <p>Last contact</p>
+                                {% if contact.updated_at is not null %}
+                                    <p>{{ contact.updated_at|naturaltime }} </p>
+                                {% else %}
+                                    <p>never</p>
+                                {% endif %}
+                                <p></p>
+                            </div>
+                        </a>
+                    {% endfor %}
+                    {% for contact in contacts3 %}
+                        <a href="/contact/view/{{ contact.id }}">
+                            <div class="contact-card" style="opacity: 0.2;">
+                                {% if contact.avatar %}
+                                    <p><img src="{{ contact.avatar.url }}" width="100px" class="avatar-main"></p>
+                                {% endif %}
+                                <p>{{ contact.first_name }} {{ contact.last_name }}</p>
+                                <p>Last contact</p>
+                                {% if contact.updated_at is not null %}
+                                    <p>{{ contact.updated_at|naturaltime }} </p>
+                                {% else %}
+                                    <p>never</p>
+                                {% endif %}
+                                <p></p>
+                            </div>
+                        </a>
+                    {% endfor %}
+                    {#                {% endfor %}#}
+                    <a href="/contact/create">
+                        <div class="contact-card">
+                            <p class="add-contact">Add new contact</p>
+                        </div>
+                    </a>
+                {% endif %}
+            {% if contacts_list2 %}
+                    {% for contact in contacts1 %}
+                        <a href="/contact/view/{{ contact.id }}">
+                            <div class="contact-card" style="opacity: 0.2;">
+                                {% if contact.avatar %}
+                                    <p><img src="{{ contact.avatar.url }}" width="100px" class="avatar-main"></p>
+                                {% endif %}
+                                <p>{{ contact.first_name }} {{ contact.last_name }}</p>
+                                <p>Last contact</p>
+                                {% if contact.updated_at is not null %}
+                                    <p>{{ contact.updated_at|naturaltime }} </p>
+                                {% else %}
+                                    <p>never</p>
+                                {% endif %}
+                                <p></p>
+                            </div>
+                        </a>
+                    {% endfor %}
+                    {% for contact in contacts2 %}
+                        <a href="/contact/view/{{ contact.id }}">
+                            <div class="contact-card" style="opacity: 0.5;">
+                                {% if contact.avatar %}
+                                    <p><img src="{{ contact.avatar.url }}" width="100px" class="avatar-main"></p>
+                                {% endif %}
+                                <p>{{ contact.first_name }} {{ contact.last_name }}</p>
+                                <p>Last contact</p>
+                                {% if contact.updated_at is not null %}
+                                    <p>{{ contact.updated_at|naturaltime }} </p>
+                                {% else %}
+                                    <p>never</p>
+                                {% endif %}
+                                <p></p>
+                            </div>
+                        </a>
+                    {% endfor %}
+                    {% for contact in contacts3 %}
+                        <a href="/contact/view/{{ contact.id }}">
+                            <div class="contact-card">
+                                {% if contact.avatar %}
+                                    <p><img src="{{ contact.avatar.url }}" width="100px" class="avatar-main"></p>
+                                {% endif %}
+                                <p>{{ contact.first_name }} {{ contact.last_name }}</p>
+                                <p>Last contact</p>
+                                {% if contact.updated_at is not null %}
+                                    <p>{{ contact.updated_at|naturaltime }} </p>
+                                {% else %}
+                                    <p>never</p>
+                                {% endif %}
+                                <p></p>
+                            </div>
+                        </a>
+                    {% endfor %}
+                    {#                {% endfor %}#}
+                    <a href="/contact/create">
+                        <div class="contact-card">
+                            <p class="add-contact">Add new contact</p>
+                        </div>
+                    </a>
+                {% endif %}
+            {% if contacts %}
+                    {% for contact in contacts %}
+                        <a href="/contact/view/{{ contact.id }}">
+                            <div class="contact-card"">
+                                {% if contact.avatar %}
+                                    <p><img src="{{ contact.avatar.url }}" width="100px" class="avatar-main"></p>
+                                {% endif %}
+                                <p>{{ contact.first_name }} {{ contact.last_name }}</p>
+                                <p>Last contact</p>
+                                {% if contact.updated_at is not null %}
+                                    <p>{{ contact.updated_at|naturaltime }} </p>
+                                {% else %}
+                                    <p>never</p>
+                                {% endif %}
+                                <p></p>
+                            </div>
+                        </a>
+                    {% endfor %}
+                    {#                {% endfor %}#}
+                    <a href="/contact/create">
+                        <div class="contact-card">
+                            <p class="add-contact">Add new contact</p>
+                        </div>
+                    </a>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

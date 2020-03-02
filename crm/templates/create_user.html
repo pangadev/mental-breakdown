@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="login-page">
+        <div class="row">
+            <div class="col-lg-12">
+                <form action="/add_user/" method="post">
+                    {% csrf_token %}
+                    <p>{{ form.username }}</p>
+                    <p>{{ form.password1 }}</p>
+                    <p>{{ form.password2}}</p>
+                    <p>{{ form.name }}</p>
+                    <p>{{ form.last_name }}</p>
+                    <p>{{ form.email }}</p>
+                    <input type="submit" value="Sign up">
+                </form>
+                {% if error %}
+                    {{ error }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

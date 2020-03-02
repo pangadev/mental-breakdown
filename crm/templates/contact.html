@@ -1,0 +1,242 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block content %}
+    <div class="contact-info">
+        <div class="col-lg-12">
+            {% if form %}
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group col-md-12 mb-0">
+                            {{ form.avatar }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12 mb-0">
+                            <h1> {{ form.first_name }} {{ form.last_name }}</h1>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12 mb-0">
+                            <h5>{{ form.sex }} Born: {{ form.birthdate }}</h5>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12 mb-0">
+                            <p>{{ form.description }}</p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12 mb-0">
+                            <p>{{ form.tags }}</p>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-12 mb-0">
+                            <button type="submit" title="save contact" class="btn btn-default">Save</button>
+                        </div>
+                    </div>
+                </form>
+            {% endif %}
+
+            {% if contact %}
+                <div class="form-row avatar">
+                    <div class="form-group col-md-12 mb-0">
+                        {% if contact.avatar %}
+                            <img src="{{ contact.avatar.url }}" width="250px" class="avatar-main">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12 mb-0">
+                        <h1>{{ contact.first_name }} {{ contact.last_name }}</h1>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12 mb-0">
+                        <h5>{{ contact.age }} years old, {{ contact.sex|lower }}. Born: {{ contact.birthdate }}</h5>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12 mb-0">
+                        <p>{{ contact.description }}</p>
+                        <p>{{ contact.tags }}</p>
+                        <p>Added by {{ contact.created_by|capfirst }}</p>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12 mb-0">
+                        <a href="/contact/edit/{{ contact.id }}" class="btn btn-defaultbtn btn-default">Edit</a>
+                        <a href="/contact/delete/{{ contact.id }}" class="btn btn-default">Delete</a>
+                        <a href="/render/pdf/{{ contact.id }}" class="btn btn-default">Download</a>
+
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block relationship %}
+    <div class="relationships">
+        <div class="col-md-12">
+            <p>Relacje |
+                {% if contact %}
+                    <a href="/contact/{{ contact.id }}/relationship/add">Add</a>
+                {% else %}
+                    <a href="/contact/{{ id }}/relationship/add">Add</a>
+                {% endif %}
+            </p>
+        </div>
+        {% if relationship_form %}
+            <div class="col-md-12">
+                <form action="/contact/{{ contact.id }}/relationship/add" method="post">
+                    {% csrf_token %}
+
+                    <blockquote class="blockquote">
+                        <p class="mb-0">
+                            {{ relationship_form.contact }}
+                        </p>
+                        <footer class="blockquote-footer">
+                            <cite>{{ relationship_form.types }} |
+                                <button type="submit" title="save contact">Save</button>
+                            </cite>
+                        </footer>
+                    </blockquote>
+
+                </form>
+            </div>
+        {% endif %}
+        {% if from_relationships %}
+            {% for relationship in from_relationships %}
+                <div class="col-md-12">
+                    <blockquote class="blockquote">
+                        <p class="mb-0">
+                            <a href="/contact/view/{{ relationship.to_contact.id }}">{{ relationship.to_contact }}</a>
+                        </p>
+                        <footer class="blockquote-footer">
+                            <cite>{{ relationship.types.to_type }} | <a
+                                    href="/contact/{{ contact.id }}/relationship/delete/{{ "from" }}/{{ relationship.to_contact.id }}/{{ relationship.types.id }}">Delete</a></cite>
+                        </footer>
+                    </blockquote>
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% if to_relationships %}
+            {% for relationship in to_relationships %}
+                <div class="col-md-12">
+                    <blockquote class="blockquote">
+                        <p class="mb-0">
+                            <a href="/contact/view/{{ relationship.from_contact.id }}">{{ relationship.from_contact }}</a>
+                        </p>
+                        <footer class="blockquote-footer">
+                            <cite>{{ relationship.types.from_type }} | <a
+                                    href="/contact/{{ contact.id }}/relationship/delete/{{ "to" }}/{{ relationship.from_contact.id }}/{{ relationship.types.id }}">Delete</a></cite>
+                        </footer>
+                    </blockquote>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock %}
+
+<div class="contact-panel">
+    <div class="contact-relationships col-lg-4">
+        <div class="col-lg-12">
+            {% if relationship_form %}
+                <div class="activity-submit-box">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="relationship-select">
+                                {{ relationship_form.types }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <button type="submit" title="save contact">Save</button>
+                        </div>
+                    </form>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% block activity %}
+    {% if activity_form %}
+        <div class="activity-submit-box">
+            <form role="form" method="POST">
+                {% csrf_token %}
+                <div class="form-group activity title">
+                    {{ activity_form.title }}
+                </div>
+                <div class="form-group activity description">
+                    {{ activity_form.description }}
+                </div>
+                <button type="submit" title="save contact">Save</button>
+            </form>
+        </div>
+    {% endif %}
+    {% if activities1 %}
+        {% for activity in activities1 %}
+            <div class="activity-box">
+                <div class="activitiy-title">
+                    {{ activity.title }} | <a href="/contact/{{ contact.id }}/activity/{{ activity.id }}/edit/">Edit</a>
+                    | <a href="/contact/{{ contact.id }}/activity/{{ activity.id }}/delete/">Delete</a>
+                </div>
+                <div class="activitiy-description">
+                    {{ activity.description }}
+                </div>
+                <div class="activitiy-created">
+                    Updated: {{ activity.updated_at|naturaltime }} | Created: {{ activity.created_at|naturaltime }}
+                </div>
+{#                    Updated: {{ activity.timeAfterUpdate }}#}
+{#                </div>#}
+            </div>
+        {% endfor %}
+        {% for activity in activities2 %}
+            <div class="activity-box" style="opacity: 0.5;">
+                <div class="activitiy-title">
+                    {{ activity.title }} | <a href="/contact/{{ contact.id }}/activity/{{ activity.id }}/edit/">Edit</a>
+                    | <a href="/contact/{{ contact.id }}/activity/{{ activity.id }}/delete/">Delete</a>
+                </div>
+                <div class="activitiy-description">
+                    {{ activity.description }}
+                </div>
+                <div class="activitiy-created">
+                    Updated: {{ activity.updated_at|naturaltime }} | Created: {{ activity.created_at|naturaltime }}
+                </div>
+            </div>
+        {% endfor %}
+        {% for activity in activities3 %}
+            <div class="activity-box" style="opacity: 0.2;">
+                <div class="activitiy-title">
+                    {{ activity.title }} | <a href="/contact/{{ contact.id }}/activity/{{ activity.id }}/edit/">Edit</a>
+                    | <a href="/contact/{{ contact.id }}/activity/{{ activity.id }}/delete/">Delete</a>
+                </div>
+                <div class="activitiy-description">
+                    {{ activity.description }}
+                </div>
+                <div class="activitiy-created">
+                    Updated: {{ activity.updated_at|naturaltime }} | Created: {{ activity.created_at|naturaltime }}
+                </div>
+            </div>
+        {% endfor %}
+        {% for activity in activities4 %}
+            <div class="activity-box" style="display:none;">
+                <div class="activitiy-title">
+                    {{ activity.title }} | <a href="/contact/{{ contact.id }}/activity/{{ activity.id }}/edit/">Edit</a>
+                    | <a href="/contact/{{ contact.id }}/activity/{{ activity.id }}/delete/">Delete</a>
+                </div>
+                <div class="activitiy-description">
+                    {{ activity.description }}
+                </div>
+                <div class="activitiy-created">
+                    Updated: {{ activity.updated_at|naturaltime }} | Created: {{ activity.created_at|naturaltime }}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+    </div>
+{% endblock %}
